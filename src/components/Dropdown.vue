@@ -7,7 +7,7 @@
       class="dropdown-input"
       :id="dropdownId"
       type="text"
-      placeholder="Введите страну на латинице"
+      placeholder="Enter the country"
       @click="showDropdown"
       :name="inputName"
     />

@@ -1,10 +1,10 @@
 <template>
   <form @submit.prevent="sendForm" @keyup.enter="checkValidity" class="form">
     <div class="person">
-      <h3 class="form-title">Личные данные</h3>
+      <h3 class="form-title">Personal data</h3>
       <div class="name">
         <div>
-          <label for="surname"> Фамилия</label>
+          <label for="surname">Surname</label>
           <input
             type="text"
             name="surname"
@@ -15,7 +15,7 @@
         </div>
 
         <div>
-          <label for="name"> Имя </label>
+          <label for="name">Name</label>
           <input
             type="text"
             name="name"
@@ -26,7 +26,7 @@
         </div>
 
         <div>
-          <label for="middle-name"> Отчество </label>
+          <label for="middle-name">Middle name</label>
           <input
             type="text"
             name="middle-name"
@@ -38,12 +38,11 @@
       </div>
 
       <div>
-        <label for="birthday"> Дата рождения </label>
+        <label for="birthday">Date of birth</label>
         <input
           type="date"
           name="birthday"
           id="birthday"
-          placeholder="дд.мм.гггг"
           min="1900-01-01"
           :max="formatedDate"
         />
@@ -55,11 +54,11 @@
       </div>
 
       <div>
-        <p>Пол</p>
+        <p>Gender</p>
         <div class="radio">
           <div>
             <input type="radio" id="male" name="gender" value="male" checked />
-            <label for="male">Мужской</label>
+            <label for="male">Male</label>
           </div>
           <div>
             <input
@@ -69,14 +68,14 @@
               value="female"
               required
             />
-            <label for="female">Женский</label>
+            <label for="female">Female</label>
           </div>
         </div>
       </div>
     </div>
 
     <div class="passport">
-      <h3 class="form-title">Паспортные данные</h3>
+      <h3 class="form-title">Passport data</h3>
 
       <Dropdown
         @on-item-selected="citizenship = $event.nationality"
@@ -84,12 +83,12 @@
         :input-name="'citizenship-country'"
         :dropdown-id="'citizenship-country'"
       >
-        Гражданство
+        Citizenship:
       </Dropdown>
 
       <div class="russian" v-if="isRussia">
         <div>
-          <label for="passport-series"> Серия паспорта</label>
+          <label for="passport-series"> Passport series</label>
           <input
             type="text"
             name="passport-series"
@@ -100,7 +99,7 @@
         </div>
 
         <div>
-          <label for="passport-number"> Номер паспорта</label>
+          <label for="passport-number"> Passport number</label>
           <input
             type="text"
             name="passport-number"
@@ -111,12 +110,11 @@
         </div>
 
         <div>
-          <label for="passport-date"> Дата выдачи </label>
+          <label for="passport-date"> Date of issue </label>
           <input
             type="date"
             name="passport-date"
             id="passport-date"
-            placeholder="дд.мм.гггг"
             min="1900-01-01"
             :max="formatedDate"
           />
@@ -126,7 +124,7 @@
       <div class="foreign" v-else>
         <div class="name">
           <div>
-            <label for="surname-latin"> Фамилия на латинице</label>
+            <label for="surname-latin"> Surname </label>
             <input
               type="text"
               name="surname-latin"
@@ -137,7 +135,7 @@
           </div>
 
           <div>
-            <label for="name-latin"> Имя на латинице </label>
+            <label for="name-latin"> Name </label>
             <input
               type="text"
               name="name-latin"
@@ -150,7 +148,7 @@
 
         <div>
           <label>
-            Номер паспорта
+            Passport number
             <input
               type="number"
               name="foreign-passport-number"
@@ -164,11 +162,11 @@
           @on-item-reset="passportCountry = ''"
           :input-name="'passport-country'"
           :dropdown-id="'passport-country'"
-          >Страна выдачи</Dropdown
+          >Place of issue</Dropdown
         >
 
         <div class="passport-type">
-          <label for="passport-type">Тип паспорта </label>
+          <label for="passport-type">Passport type </label>
           <select id="passport-type" name="passport-type">
             <option
               v-for="(passport, i) in passportTypes"
@@ -182,7 +180,7 @@
       </div>
 
       <div>
-        <p>Меняли ли фамилию или имя?</p>
+        <p>Have you changed your name or surname?</p>
         <div class="radio">
           <div>
             <input
@@ -192,7 +190,7 @@
               value="yes"
               v-model="isChanged"
             />
-            <label for="yes">Да</label>
+            <label for="yes">Yes</label>
           </div>
 
           <div>
@@ -203,14 +201,14 @@
               value="no"
               v-model="isChanged"
             />
-            <label for="no">Нет</label>
+            <label for="no">No</label>
           </div>
         </div>
       </div>
 
       <div v-if="isChanged === 'yes'" class="name">
         <div>
-          <label for="previous-surname"> Предыдущая Фамилия </label>
+          <label for="previous-surname"> Previous surname </label>
           <input
             type="text"
             name="previous-surname"
@@ -221,7 +219,7 @@
         </div>
 
         <div>
-          <label for="previous-name"> Предыдущее Имя </label>
+          <label for="previous-name"> Previous name </label>
           <input
             type="text"
             name="previous-name"
@@ -234,16 +232,16 @@
     </div>
 
     <button @click="checkValidity" type="submit" class="submit-button">
-      Отправить
+      Send
     </button>
   </form>
 </template>
 
 <script>
-import citizenships from '../assets/data/citizenships.json'
-import passportTypes from '../assets/data/passport-types.json'
-import { format } from 'date-fns'
-import Dropdown from './Dropdown.vue'
+import citizenships from "../assets/data/citizenships.json";
+import passportTypes from "../assets/data/passport-types.json";
+import { format } from "date-fns";
+import Dropdown from "./Dropdown.vue";
 
 export default {
   components: {
@@ -252,45 +250,45 @@ export default {
   data() {
     return {
       citizenships: citizenships,
-      citizenship: 'Russia',
+      citizenship: "Russia",
       passportTypes: passportTypes,
-      isChanged: 'no',
-      passportCountry: '',
-    }
+      isChanged: "no",
+      passportCountry: "",
+    };
   },
 
   methods: {
     sendForm(event) {
-      const data = new FormData(event.target)
-      const dataArr = Array.from(data).filter((item) => !!item[1])
-      const dataObj = JSON.stringify(Object.fromEntries(dataArr))
-      console.log(dataObj)
+      const data = new FormData(event.target);
+      const dataArr = Array.from(data).filter((item) => !!item[1]);
+      const dataObj = JSON.stringify(Object.fromEntries(dataArr));
+      console.log(dataObj);
     },
 
     checkValidity() {
-      this.$el.querySelectorAll('input').forEach((input) => {
+      this.$el.querySelectorAll("input").forEach((input) => {
         if (!input.validity.valid) {
-          if (!input.classList.contains('invalid')) {
-            input.classList.add('invalid')
+          if (!input.classList.contains("invalid")) {
+            input.classList.add("invalid");
           }
         } else {
-          if (input.classList.contains('invalid')) {
-            input.classList.remove('invalid')
+          if (input.classList.contains("invalid")) {
+            input.classList.remove("invalid");
           }
         }
-      })
+      });
     },
   },
 
   computed: {
     isRussia() {
-      return this.citizenship === 'Russia'
+      return this.citizenship === "Russia";
     },
     formatedDate() {
-      return format(new Date(), 'yyyy-MM-dd')
+      return format(new Date(), "yyyy-MM-dd");
     },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -327,7 +325,7 @@ export default {
   outline: none;
   border: 1px solid rgb(202, 199, 199);
 }
-.form input[type='email'] {
+.form input[type="email"] {
   width: 400px;
 }
 .radio {
