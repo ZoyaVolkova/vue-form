@@ -1,6 +1,10 @@
 # vue-form
 
-## Форма Vue.js с валидацией, текстовым поиском (debounce), радиокнопками и динамическим отображением в зависимости от выбранных полей
+## Vue.js form with validation, fast search, debounce, radio buttons and dynamically displaying fields
 
 
 ![Untitled](src/assets/images/form.png)
+
+##
+
+![Untitled](src/assets/images/form2.png)
